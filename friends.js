@@ -1,16 +1,56 @@
+// Check if user is logged in
+const currentUser = localStorage.getItem('currentUser');
+if (!currentUser) {
+    window.location.href = 'index.html';
+    return;
+}
+
 const friendsList = document.getElementById("friendsList");
 const suggestedList = document.getElementById("suggestedList");
 const searchInput = document.getElementById("searchBar");
 
-let friends = [
+// Get friends from localStorage or use defaults
+let friends = JSON.parse(localStorage.getItem('userFriends')) || [
     { name: "Alex", status: "online", page: "Friend_Pages/testBlog.html" },
     { name: "Allen", status: "offline", page: "Friend_Pages/testBlog2.html" }
 ];
 
+// Get suggested friends from registered users
+function getSuggestedFriends() {
+    const acceptedLogins = JSON.parse(localStorage.getItem('acceptedLogins')) || {};
+    const allUsers = Object.keys(acceptedLogins);
+    const friendNames = friends.map(f => f.name);
+    let suggested = allUsers.filter(user => user !== currentUser && !friendNames.includes(user) && user !== 'Qhugh05');
+    
+    // Add Qhugh05 as suggested friend if not already a friend
+    if (!friendNames.includes('Qhugh05') && currentUser !== 'Qhugh05') {
+        suggested.unshift({ name: 'Qhugh05', status: 'online', image: 'Images/Football.jpg' });
+    }
+    
+    // Add some fake accounts
+    const fakeAccounts = [
+        { name: 'Sam', status: 'online', image: 'Images/ProfilePic.jpg' },
+        { name: 'Jamie', status: 'offline', image: 'Images/ProfilePic.jpg' },
+        { name: 'Taylor', status: 'online', image: 'Images/ProfilePic.jpg' }
+    ];
+    
+    fakeAccounts.forEach(fake => {
+        suggested.push(fake);
+    });
+    
+    return suggested.map(name => {
+        if (typeof name === 'string') {
+            return { name, status: "online", image: "Images/ProfilePic.jpg" };
+        }
+        return name;
+    });
+}
+
 let suggestedFriends = [
-    { name: "Sam", status: "online", image: "Images/ProfilePic.jpg" },
-    { name: "Jamie", status: "offline", image: "Images/ProfilePic.jpg" },
-    { name: "Taylor", status: "online", image: "Images/ProfilePic.jpg" }
+    { name: 'Qhugh05', status: 'online', image: 'Images/Football.jpg' },
+    { name: 'Sam', status: 'online', image: 'Images/ProfilePic.jpg' },
+    { name: 'Jamie', status: 'offline', image: 'Images/ProfilePic.jpg' },
+    { name: 'Taylor', status: 'online', image: 'Images/ProfilePic.jpg' }
 ];
 
 function renderFriends(listToRender) {
@@ -66,6 +106,7 @@ function addFriend(index) {
     if (!friend) return;
 
     friends.push({ ...friend, page: "Friend_Pages/testBlog.html" });
+    localStorage.setItem('userFriends', JSON.stringify(friends));
     suggestedFriends.splice(index, 1);
     renderFriends(friends);
     renderSuggested();

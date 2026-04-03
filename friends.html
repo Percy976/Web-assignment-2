@@ -1,27 +1,41 @@
 <DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name ="viewport" content="width=device-width, initial-scale=1.0">
     <title>Group 32 Friends</title>
     <link rel="stylesheet" href="stylesheet.css">
 </head>
+
 <body>
 
 <header>
-<div class="dropdown">
-  <button class="dropbtn">Menu</button>
-  <div class="dropdown-content">
-    <a href="home.html">Home</a>
-    <a href="message.html">Messages</a>
-    <a href="friends.html">Friends</a>
-    <a href="index.html">Login</a>
-  </div>
-</header>
+  <!-- Creates the Dropdown menu to find the other tabs -->
+  <div class="dropdown">
+    <button class="dropbtn">Menu</button>
+    <div class="dropdown-content">
+      <a href="home.html">Home</a>
+      <a href="message.html">Messages</a>
+      <a href="friends.html">Friends</a>
+      <a href="index.html">Login</a>
+    </div>
+  </header>
 
+
+  <!-- Main body of the page -->
   <main>
-<p> Friends </p>
-</main> 
+    <p> Friends </p>
+    <input type="text" id="searchBar" placeholder="Search for friends...">
 
-</body>
+    <ul id="friendsList">
+    </ul>
+  </main> 
+
+    <script src="friends.js"></script>
+  </body>
 </html>
+
+<footer>
+    <p>&copy; 2026 Group 32. All rights reserved.</p>
+</footer>

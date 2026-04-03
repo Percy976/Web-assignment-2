@@ -21,7 +21,7 @@ main {
     margin: 0 auto;
     background-color: white;
     border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0 10px rgba(127, 107, 107, 0.1);
     text-align: center;
 }
 
@@ -102,22 +102,11 @@ nav ul {
     background-color: #f1f1f1;
 }  
 
-#friendsTab {
-    width: 200px;
-    border: 1px solid black;
-    padding: 10px;
-}
 
-.friend{
-    padding: 5px;
-    margin: 5px 0;
-    cursor: pointer;
-}
-
-.online {
-    color: green;
-}
-
-.offline{
-    color: grey;
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap : 15px;
+    margin-top: 15px;
 }

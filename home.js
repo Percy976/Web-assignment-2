@@ -1,4 +1,11 @@
 (function() {
+    // Check if user is logged in
+    const currentUser = localStorage.getItem('currentUser');
+    if (!currentUser) {
+        window.location.href = 'index.html';
+        return;
+    }
+
     const postsKey = 'userPosts';
     let userPosts = JSON.parse(localStorage.getItem(postsKey)) || [];
 
@@ -9,6 +16,18 @@
             username: 'Qhugh05',
             text: 'Hello from my vacation!',
             image: 'Images/Vacation.jpg',
+            timestamp: new Date().toISOString()
+        });
+        localStorage.setItem(postsKey, JSON.stringify(userPosts));
+    }
+
+    // Seed a welcome post for the current user if not present
+    const userPostExists = userPosts.some(post => post.username === currentUser);
+    if (!userPostExists) {
+        userPosts.unshift({
+            username: currentUser,
+            text: `Welcome to Pizza Social Media, ${currentUser}!`,
+            image: 'Images/ProfilePic.jpg',
             timestamp: new Date().toISOString()
         });
         localStorage.setItem(postsKey, JSON.stringify(userPosts));
@@ -40,6 +59,10 @@
         card.appendChild(time);
         card.appendChild(text);
         card.appendChild(img);
+
+        postsList.appendChild(card);
+    });
+})();
 
         postsList.appendChild(card);
     });

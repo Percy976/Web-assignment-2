@@ -1,21 +1,3 @@
-// Seed default user account (only added once per browser localStorage)
-(function seedAccount() {
-    const acceptedLogins = JSON.parse(localStorage.getItem('acceptedLogins')) || {};
-    const userProfiles = JSON.parse(localStorage.getItem('userProfiles')) || {};
-
-    if (!acceptedLogins['Qhugh05']) {
-        acceptedLogins['Qhugh05'] = 'grade6team';
-        localStorage.setItem('acceptedLogins', JSON.stringify(acceptedLogins));
-    }
-
-    if (!userProfiles['Qhugh05']) {
-        userProfiles['Qhugh05'] = {
-            username: 'Qhugh05',
-            profilePic: 'Images/Football.jpg'
-        };
-        localStorage.setItem('userProfiles', JSON.stringify(userProfiles));
-    }
-})();
 document.getElementById('newUserForm').addEventListener('submit', function(event) {
     event.preventDefault();
     
@@ -50,6 +32,6 @@ document.getElementById('newUserForm').addEventListener('submit', function(event
     
     // Redirect to login page after 2 seconds
     setTimeout(function() {
-        window.location.href = 'login.html';
+        window.location.href = 'index.html';
     }, 2000);
 });

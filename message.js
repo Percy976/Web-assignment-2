@@ -1,4 +1,11 @@
-const currentUsername = 'Qhugh05';
+// Check if user is logged in
+const currentUserCheck = localStorage.getItem('currentUser');
+if (!currentUserCheck) {
+    window.location.href = 'index.html';
+    return;
+}
+
+const currentUsername = localStorage.getItem('currentUser') || 'Qhugh05';
 const friendsMessageList = document.getElementById('friendsMessageList');
 const chatWithHeading = document.getElementById('chatWithHeading');
 const chatMessages = document.getElementById('chatMessages');
@@ -7,9 +14,29 @@ const sendBtn = document.getElementById('sendBtn');
 
 let selectedFriend = null;
 
+// Seed a welcome message from Group 32 if not already present
+let messages = getMessages();
+const group32Id = conversationId(currentUsername, 'Group 32');
+if (!messages[group32Id]) {
+    messages[group32Id] = [
+        {
+            from: 'Group 32',
+            to: currentUsername,
+            text: 'Welcome to the website!',
+            timestamp: new Date().toISOString()
+        }
+    ];
+    saveMessages(messages);
+}
+
 function getAcceptedUsers() {
     const acceptedLogins = JSON.parse(localStorage.getItem('acceptedLogins')) || {};
-    return Object.keys(acceptedLogins).filter(u => u !== currentUsername);
+    let users = Object.keys(acceptedLogins).filter(u => u !== currentUsername);
+    // Add Group 32 if not already
+    if (!users.includes('Group 32')) {
+        users.push('Group 32');
+    }
+    return users;
 }
 
 function getMessages() {
